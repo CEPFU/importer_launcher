@@ -18,7 +18,7 @@ public class LocationLoader {
 		connectionManager = new ConnectionManager(host, database, user, password);
 	}
 	
-	public List<StationMetaData> getLocations() throws SQLException{
+	public synchronized List<StationMetaData> getLocations() throws SQLException{
 		ArrayList<StationMetaData> stations = new ArrayList<StationMetaData>();
 		
 		Connection connection = connectionManager.getConnection(this);
