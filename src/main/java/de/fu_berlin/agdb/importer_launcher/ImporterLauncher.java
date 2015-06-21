@@ -1,21 +1,30 @@
 package de.fu_berlin.agdb.importer_launcher;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.fu_berlin.agdb.importer.AWeatherImporter;
-import de.fu_berlin.agdb.importer_launcher.core.NioEventPublisher;
 import de.fu_berlin.agdb.importer_launcher.core.IEventPublisher;
 import de.fu_berlin.agdb.importer_launcher.core.LocationLoader;
+import de.fu_berlin.agdb.importer_launcher.core.NioEventPublisher;
 import de.fu_berlin.agdb.importer_launcher.core.WeatherImporterRunner;
 import de.fu_berlin.agdb.yahoo_importer.YahooImporter;
 
 public class ImporterLauncher {
-    public static void main( String[] args ) {
+	
+	private static final String DATABASE_HOST = "10.10.10.104";
+	private static final String DATABASE_PORT = "5432";
+	private static final String DATABASE = "ems";
+	private static final String USER = "ems";
+	private static final String PASSWORD = "ems";
+	
+	private static final int APPLICATION_PORT = 9977;
+	
+    public static void main( String[] args ) throws IOException {
     	
-    	
-    	LocationLoader locationLoader = new LocationLoader("10.10.10.104:5432", "ems", "ems", "ems");
-    	IEventPublisher initializeNewEventPublisher = initializeNewEventPublisher();
+    	LocationLoader locationLoader = new LocationLoader(DATABASE_HOST + ":" + DATABASE_PORT, DATABASE, USER, PASSWORD);
+    	IEventPublisher initializeNewEventPublisher =  new NioEventPublisher(APPLICATION_PORT);
     	
     	for (AWeatherImporter weatherImporter : getImporters()) {
 			WeatherImporterRunner weatherImporterRunner = new WeatherImporterRunner(weatherImporter, locationLoader, initializeNewEventPublisher);
@@ -31,12 +40,5 @@ public class ImporterLauncher {
     	//add all importers we want to use
     	importers.add(new YahooImporter());
     	return importers;
-    }
-    
-    private static IEventPublisher initializeNewEventPublisher(){
-    	NioEventPublisher eventPublisher = new NioEventPublisher();
-    	Thread publisherThread = new Thread(eventPublisher);
-    	publisherThread.start();
-    	return eventPublisher;
     }
 }

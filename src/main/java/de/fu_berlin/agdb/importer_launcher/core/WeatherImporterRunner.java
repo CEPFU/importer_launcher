@@ -1,11 +1,13 @@
 package de.fu_berlin.agdb.importer_launcher.core;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import de.fu_berlin.agdb.importer.AWeatherImporter;
+import de.fu_berlin.agdb.importer.payload.LocationWeatherData;
 
 public class WeatherImporterRunner implements Runnable {
 
@@ -27,7 +29,10 @@ public class WeatherImporterRunner implements Runnable {
 	public void run() {
 		while (true) {
 			try {
-				publisher.publishEvents(importer.getWeatherDataForLocationsRespectingTimeout(locationLoader.getLocations()));
+				List<LocationWeatherData> weatherDataForLocationsRespectingTimeout = importer.getWeatherDataForLocationsRespectingTimeout(locationLoader.getLocations());
+				if(weatherDataForLocationsRespectingTimeout != null){
+					publisher.publishEvents(weatherDataForLocationsRespectingTimeout);
+				}
 				Thread.sleep(DEFAULT_TIMEOUT);
 			} catch (SQLException e) {
 				logger.error("Error while running Importer:", e);

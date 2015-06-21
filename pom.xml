@@ -31,6 +31,11 @@
 	  <artifactId>importer</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
 	</dependency>
+	<dependency>
+	  <groupId>de.fu-berlin.agdb</groupId>
+	  <artifactId>nio-tools</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	</dependency>
     <dependency>
 	  <groupId>de.fu-berlin.agdb</groupId>
 	  <artifactId>yahoo-importer</artifactId>
