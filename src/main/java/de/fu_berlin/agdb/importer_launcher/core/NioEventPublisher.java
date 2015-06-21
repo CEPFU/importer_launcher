@@ -37,7 +37,7 @@ public class NioEventPublisher extends AConnectionHandler implements IEventPubli
 			for (LocationWeatherData locationWeatherData : accumulatedWeatherData) {
 				jsonAccumulatedWeatherData.put(locationWeatherData.asJSONObject());
 			}
-			
+			logger.debug("Accumulated following data: \n" + jsonAccumulatedWeatherData.toString());
 			nioServer.bordcastData(jsonAccumulatedWeatherData.toString().getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			logger.error("Error publishing events:", e);
