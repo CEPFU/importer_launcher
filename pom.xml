@@ -41,6 +41,11 @@
 	  <artifactId>yahoo-importer</artifactId>
 	  <version>0.0.1-SNAPSHOT</version>
 	</dependency>
+	<dependency>
+	  <groupId>de.fu-berlin.agdb</groupId>
+	  <artifactId>dwd-importer</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	</dependency>
   </dependencies>
   
   <build>

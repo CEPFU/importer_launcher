@@ -4,16 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fu_berlin.agdb.dwd_importer.DWDImporter;
 import de.fu_berlin.agdb.importer.AWeatherImporter;
+import de.fu_berlin.agdb.importer.tools.LocationLoader;
 import de.fu_berlin.agdb.importer_launcher.core.IEventPublisher;
-import de.fu_berlin.agdb.importer_launcher.core.LocationLoader;
 import de.fu_berlin.agdb.importer_launcher.core.NioEventPublisher;
 import de.fu_berlin.agdb.importer_launcher.core.WeatherImporterRunner;
 import de.fu_berlin.agdb.yahoo_importer.YahooImporter;
 
 public class ImporterLauncher {
 	
-	private static final String DATABASE_HOST = "10.10.10.104";
+	private static final String DATABASE_HOST = "10.10.10.105";
 	private static final String DATABASE_PORT = "5432";
 	private static final String DATABASE = "ems";
 	private static final String USER = "ems";
@@ -39,6 +40,7 @@ public class ImporterLauncher {
     	
     	//add all importers we want to use
     	importers.add(new YahooImporter());
+    	importers.add(new DWDImporter());
     	return importers;
     }
 }

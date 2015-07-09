@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import de.fu_berlin.agdb.importer.AWeatherImporter;
 import de.fu_berlin.agdb.importer.payload.LocationWeatherData;
+import de.fu_berlin.agdb.importer.tools.LocationLoader;
 
 public class WeatherImporterRunner implements Runnable {
 
