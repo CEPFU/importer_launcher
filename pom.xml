@@ -21,10 +21,10 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-		<groupId>postgresql</groupId>
-		<artifactId>postgresql</artifactId>
-		<version>9.1-901-1.jdbc4</version>
+	  <dependency>
+      <groupId>org.postgresql</groupId>
+	  <artifactId>postgresql</artifactId>
+	  <version>9.4-1201-jdbc41</version>
 	</dependency>
     <dependency>
 	  <groupId>de.fu-berlin.agdb</groupId>
