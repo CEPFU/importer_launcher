@@ -39,6 +39,8 @@ public class WeatherImporterRunner implements Runnable {
 				logger.error("Error while running Importer:", e);
 			} catch (InterruptedException e) {
 				logger.error("Runner interrupted while sleeping:", e);
+			} catch (Exception e) {
+				logger.error("An error occured:", e);
 			}
 		}		
 	}
