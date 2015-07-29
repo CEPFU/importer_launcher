@@ -14,7 +14,7 @@ import de.fu_berlin.agdb.yahoo_importer.YahooImporter;
 
 public class ImporterLauncher {
 	
-	private static final String DATABASE_HOST = "10.10.10.105";
+	private static final String DATABASE_HOST = "localhost";
 	private static final String DATABASE_PORT = "5432";
 	private static final String DATABASE = "ems";
 	private static final String USER = "ems";
