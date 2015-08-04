@@ -1,10 +1,12 @@
 package de.fu_berlin.agdb.importer_launcher;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
-import de.fu_berlin.agdb.dwd_importer.DWDImporter;
 import de.fu_berlin.agdb.importer.AWeatherImporter;
 import de.fu_berlin.agdb.importer.tools.LocationLoader;
 import de.fu_berlin.agdb.importer_launcher.core.IEventPublisher;
@@ -14,18 +16,18 @@ import de.fu_berlin.agdb.yahoo_importer.YahooImporter;
 
 public class ImporterLauncher {
 	
-	private static final String DATABASE_HOST = "localhost";
-	private static final String DATABASE_PORT = "5432";
-	private static final String DATABASE = "ems";
-	private static final String USER = "ems";
-	private static final String PASSWORD = "ems";
-	
-	private static final int APPLICATION_PORT = 9977;
-	
+	private static Properties properties;
+
     public static void main( String[] args ) throws IOException {
+    	loadProperties();
     	
-    	LocationLoader locationLoader = new LocationLoader(DATABASE_HOST + ":" + DATABASE_PORT, DATABASE, USER, PASSWORD);
-    	IEventPublisher initializeNewEventPublisher =  new NioEventPublisher(APPLICATION_PORT);
+    	LocationLoader locationLoader = new LocationLoader(properties.getProperty("database_host") 
+    			+ ":" 
+    			+ properties.getProperty("database_port"), 
+    			properties.getProperty("database"), 
+    			properties.getProperty("database_user"), 
+    			properties.getProperty("database_password"));
+    	IEventPublisher initializeNewEventPublisher =  new NioEventPublisher(Integer.valueOf(properties.getProperty("application_port")));
     	
     	for (AWeatherImporter weatherImporter : getImporters()) {
 			WeatherImporterRunner weatherImporterRunner = new WeatherImporterRunner(weatherImporter, locationLoader, initializeNewEventPublisher);
@@ -34,13 +36,21 @@ public class ImporterLauncher {
 			runnerThread.start();
 		}
     }
+
+    
+    public static void loadProperties() throws IOException {
+    	properties = new Properties();
+    	FileReader reader = new FileReader(new File("importer-launcher.properties"));
+		properties.load(reader);
+		reader.close();
+	}
     
     private static List<AWeatherImporter> getImporters(){
     	List<AWeatherImporter> importers = new ArrayList<AWeatherImporter>();
     	
     	//add all importers we want to use
     	importers.add(new YahooImporter());
-    	importers.add(new DWDImporter());
+//    	importers.add(new DWDImporter());
     	return importers;
     }
 }
