@@ -12,13 +12,12 @@ import de.fu_berlin.agdb.importer.tools.LocationLoader;
 import de.fu_berlin.agdb.importer_launcher.core.IEventPublisher;
 import de.fu_berlin.agdb.importer_launcher.core.NioEventPublisher;
 import de.fu_berlin.agdb.importer_launcher.core.WeatherImporterRunner;
-import de.fu_berlin.agdb.yahoo_importer.YahooImporter;
 
 public class ImporterLauncher {
 	
 	private static Properties properties;
 
-    public static void main( String[] args ) throws IOException {
+    public static void main( String[] args ) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
     	loadProperties();
     	
     	LocationLoader locationLoader = new LocationLoader(properties.getProperty("database_host") 
@@ -45,12 +44,21 @@ public class ImporterLauncher {
 		reader.close();
 	}
     
-    private static List<AWeatherImporter> getImporters(){
+    private static List<AWeatherImporter> getImporters() throws ClassNotFoundException, InstantiationException, IllegalAccessException{
     	List<AWeatherImporter> importers = new ArrayList<AWeatherImporter>();
-    	
-    	//add all importers we want to use
-    	importers.add(new YahooImporter());
-//    	importers.add(new DWDImporter());
+
+    	for (Object key : properties.keySet()) {
+    		if(key instanceof String){
+    			String propertiesEntry = (String) key;
+    			if(propertiesEntry.startsWith("importer.")){
+    				String importerToLoad = properties.getProperty(propertiesEntry);
+    				Class<?> clazz = ClassLoader.getSystemClassLoader().loadClass(importerToLoad);
+    				AWeatherImporter importer = (AWeatherImporter) clazz.newInstance();
+    				importers.add(importer);
+    			}
+    		}
+		}
+    	System.out.println(importers.size());
     	return importers;
     }
 }
