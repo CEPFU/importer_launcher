@@ -58,7 +58,6 @@ public class ImporterLauncher {
     			}
     		}
 		}
-    	System.out.println(importers.size());
     	return importers;
     }
 }
