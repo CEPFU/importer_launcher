@@ -17,7 +17,7 @@ public class ImporterLauncher {
 	
 	private static Properties properties;
 
-    public static void main( String[] args ) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public static void main( String[] args ) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NumberFormatException, InterruptedException {
     	loadProperties();
     	
     	LocationLoader locationLoader = new LocationLoader(properties.getProperty("database_host") 
@@ -27,6 +27,8 @@ public class ImporterLauncher {
     			properties.getProperty("database_user"), 
     			properties.getProperty("database_password"));
     	IEventPublisher initializeNewEventPublisher =  new NioEventPublisher(Integer.valueOf(properties.getProperty("application_port")));
+    	
+    	Thread.sleep(Long.valueOf(properties.getProperty("start_delay")));
     	
     	for (AWeatherImporter weatherImporter : getImporters()) {
 			WeatherImporterRunner weatherImporterRunner = new WeatherImporterRunner(weatherImporter, locationLoader, initializeNewEventPublisher);
