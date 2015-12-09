@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.log4j.BasicConfigurator;
+
 import de.fu_berlin.agdb.importer.AWeatherImporter;
 import de.fu_berlin.agdb.importer.tools.LocationLoader;
 import de.fu_berlin.agdb.importer_launcher.core.IEventPublisher;
@@ -18,6 +20,8 @@ public class ImporterLauncher {
 	private static Properties properties;
 
     public static void main( String[] args ) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, NumberFormatException, InterruptedException {
+    	BasicConfigurator.configure();
+    	
     	loadProperties();
     	
     	LocationLoader locationLoader = new LocationLoader(properties.getProperty("database_host") 

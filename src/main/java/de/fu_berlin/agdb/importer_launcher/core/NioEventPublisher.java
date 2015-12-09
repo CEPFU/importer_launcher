@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.json.JSONArray;
 
 import de.fu_berlin.agdb.importer.payload.LocationWeatherData;
 import de.fu_berlin.agdb.nio_tools.AConnectionHandler;
@@ -32,13 +31,10 @@ public class NioEventPublisher extends AConnectionHandler implements IEventPubli
 	@Override
 	public void publishEvents(List<LocationWeatherData> accumulatedWeatherData) {
 		try {
-			JSONArray jsonAccumulatedWeatherData = new JSONArray();
-			
 			for (LocationWeatherData locationWeatherData : accumulatedWeatherData) {
-				jsonAccumulatedWeatherData.put(locationWeatherData.asJSONObject());
+				nioServer.bordcastData(locationWeatherData.asJSONObject().toString().getBytes("UTF-8"));
+				logger.debug("Boardcasted following event: \n" + locationWeatherData.asJSONObject().toString());
 			}
-			logger.debug("Accumulated following data: \n" + jsonAccumulatedWeatherData.toString());
-			nioServer.bordcastData(jsonAccumulatedWeatherData.toString().getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e) {
 			logger.error("Error publishing events:", e);
 		}
