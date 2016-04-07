@@ -26,27 +26,12 @@
     <dependency>
       <groupId>de.fu-berlin.agdb</groupId>
       <artifactId>importer</artifactId>
-      <version>0.1.0</version>
+      <version>0.2.0</version>
     </dependency>
     <dependency>
       <groupId>de.fu-berlin.agdb</groupId>
       <artifactId>nio-tools</artifactId>
       <version>0.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>de.fu-berlin.agdb</groupId>
-      <artifactId>yahoo-importer</artifactId>
-      <version>0.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>de.fu-berlin.agdb</groupId>
-      <artifactId>dwd-importer</artifactId>
-      <version>0.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>de.fu-berlin.agdb</groupId>
-      <artifactId>noaa-importer</artifactId>
-      <version>0.2.0</version>
     </dependency>
   </dependencies>
 
